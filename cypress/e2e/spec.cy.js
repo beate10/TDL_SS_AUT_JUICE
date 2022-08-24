@@ -88,15 +88,50 @@ context ("Juice Shop Test", () => {
     })
 
 
-    it.only("Search 500ml and validate Lemon, while having multiple cards",() => {
+    it("Search 500ml and validate Lemon, while having multiple cards",() => {
       BasePage.searchIcon.click();
       BasePage.searchField.type("500ml{enter}");
       MainPage.getProductCard("Lemon Juice (500ml)").click();
       ProductCard.card.should("contain", "Sour but full of vitamins.");
-    })
+    });
 
 
-    
+    it("Search 500ml and validate cards", () => {
+      BasePage.searchIcon.click();
+      BasePage.searchField.type("500ml{enter}");
+
+      MainPage.getProductCard("Eggfruit Juice (500ml)").click();
+      ProductCard.card.should("contain", "Now with even more exotic flavour.");
+      ProductCard.closeButton.click();
+
+      MainPage.getProductCard("Lemon Juice (500ml)").click();
+      ProductCard.card.should("contain", "Sour but full of vitamins.");
+      ProductCard.closeButton.click();
+
+      MainPage.getProductCard("Strawberry Juice (500ml)").click();
+      ProductCard.card.should("contain", "Sweet & tasty!");
+      
+    });
+
+
+    it.only("Add a review", () => {
+      
+      BasePage.searchIcon.click();
+      BasePage.searchField.type("Raspberry{enter}");
+
+      MainPage.getProductCard("Raspberry Juice (1000ml)").click();
+      ProductCard.reviewProductField.click().type("Tastes like metal");
+      ProductCard.reviewProductField.click().type("fuj");
+      ProductCard.submitButton.click();
+      ProductCard.expandReviewsButton.click();
+      ProductCard.reviews.should("contain", "Tastes like metal");
+
+    });
+
+
+
+
+
   })
 
 
