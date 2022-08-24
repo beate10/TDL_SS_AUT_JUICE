@@ -1,8 +1,14 @@
 import BasePage from "../pageObjects/BasePage"
+import BasketPage from "../pageObjects/BasketPage"
+import DeliveryMethodPage from "../pageObjects/DeliveryMethodPage"
 import LoginPage from "../pageObjects/LoginPage"
 import MainPage from "../pageObjects/MainPage"
+import OrderCompletionPage from "../pageObjects/OrderCompletionPage"
+import OrderSummaryPage from "../pageObjects/OrderSummaryPage"
+import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage"
 import ProductCard from "../pageObjects/ProductCard"
 import RegistrationPage from "../pageObjects/RegistrationPage"
+import SelectAddressPage from "../pageObjects/SelectAddressPage"
 
 describe('empty spec', () => {
   it('passes', () => {
@@ -114,14 +120,13 @@ context ("Juice Shop Test", () => {
     });
 
 
-    it.only("Add a review", () => {
+    it("Add a review", () => {
       
       BasePage.searchIcon.click();
       BasePage.searchField.type("Raspberry{enter}");
 
       MainPage.getProductCard("Raspberry Juice (1000ml)").click();
       ProductCard.reviewProductField.click().type("Tastes like metal");
-      ProductCard.reviewProductField.click().type("fuj");
       ProductCard.submitButton.click();
       ProductCard.expandReviewsButton.click();
       ProductCard.reviews.should("contain", "Tastes like metal");
@@ -129,8 +134,39 @@ context ("Juice Shop Test", () => {
     });
 
 
+    it("Validate product card amount", () => {
+      MainPage.cardsPerPageField.should("contain", 12);
+      MainPage.cardsPerPageField.click();
+      MainPage.cardsSelectionField.contains(24).click();
+      MainPage.allProductCards.should("have.length", 24);
+      MainPage.cardsPerPageField.click();
+      MainPage.cardsSelectionField.contains(36).click();
+      MainPage.allProductCards.should("have.length", 35);
+    })
 
 
+    it.only("Buy Girlie T-shirt", () => {
+      BasePage.searchIcon.click();
+      BasePage.searchField.type("Girlie{enter}");
+      MainPage.getAddToCartButton("Girlie").click();
+
+      BasePage.shoppingCartIcon.click();
+      BasketPage.checkoutButton.click();
+
+      SelectAddressPage.getAddressSelection("United Fakedom").click();
+      SelectAddressPage.continueButton.click();
+
+      DeliveryMethodPage.getDeliverySelection("Standard Delivery").click();
+      DeliveryMethodPage.continueButton.click();
+
+      PaymentOptionsPage.cardRadioButton.click();
+      PaymentOptionsPage.continueButton.click();
+
+      OrderSummaryPage.placeOrderButton.click();
+
+      OrderCompletionPage.confirmationMessage.should("contain", "Thank you for your purchase!");
+
+    })
 
   })
 

@@ -12,6 +12,27 @@ class MainPage extends BasePage{
         return cy.get('.mat-card').contains(product);
     }
 
+    static get allProductCards(){
+        return cy.get('.mat-card');
+    }
+
+    static get cardsPerPageField() {
+        return cy.get('.mat-select-value');
+    }
+
+    static get cardsSelectionField(){
+        return cy.get('.mat-option');
+    }
+
+
+    static getAddToCartButton(product){
+
+        return this.getProductCard(product).get('[aria-label="Add to Basket"]');
+        
+    }
+
+    
+
 
     
 

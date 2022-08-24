@@ -42,6 +42,11 @@ class BasePage {
         return cy.get('.mat-search_field');
     }
 
+    static get shoppingCartIcon(){
+        return cy.get('[aria-label="Show the shopping cart"]');
+    }
+    
+
     
 
     
