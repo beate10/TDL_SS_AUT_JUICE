@@ -6,8 +6,26 @@ class PaymentOptionsPage extends BasePage {
         return "http://localhost:3000/#/payment/shop";
     }
 
-    static get cardRadioButton(){
-        return cy.get('.mat-radio-button');
+    static get cardRadioButtons(){
+        return cy.get('.mat-row');
+    }
+
+
+    static getCardRadioButton(card){
+
+        let hello;
+        cy.get('.mat-row').each(($ele, index) => {
+            if ($ele.text().includes(card)) {
+               cy.log(index);
+               hello = Number(index);
+               //return cy.get('[class="mat-radio-container"]').eq(Number(index));
+            
+            }
+        })
+
+        cy.log(hello);
+
+        return cy.get('[class="mat-radio-container"]').eq(hello);
     }
 
     static get continueButton(){

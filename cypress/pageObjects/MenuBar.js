@@ -16,9 +16,16 @@ class MenuBar {
     }
 
     static get savedAddressButton(){
-        return cy.get('[routerlink="/address/saved"]')
+        return cy.get('[routerlink="/address/saved"]');
         
     }
+
+
+    static get paymentOptionButton(){
+        return  cy.get('[routerlink="/saved-payment-methods"]');
+        
+    }
+
 }
 
 export default MenuBar;

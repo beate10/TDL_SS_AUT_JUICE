@@ -11,6 +11,7 @@ import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage"
 import ProductCard from "../pageObjects/ProductCard"
 import RegistrationPage from "../pageObjects/RegistrationPage"
 import SavedAddressesPage from "../pageObjects/SavedAddressesPage"
+import SavedPaymentMethodsPage from "../pageObjects/SavedPaymentMethodsPage"
 import SelectAddressPage from "../pageObjects/SelectAddressPage"
 
 describe('empty spec', () => {
@@ -148,13 +149,15 @@ context ("Juice Shop Test", () => {
     })
 
 
-    it("Buy Girlie T-shirt", () => {
+    it.only("Buy Girlie T-shirt", () => {
       BasePage.searchIcon.click();
       BasePage.searchField.type("Girlie{enter}");
       MainPage.getAddToCartButton("Girlie").click();
 
+      
+
       BasePage.shoppingCartIcon.click();
-      BasketPage.checkoutButton.click();
+      BasketPage.checkoutButton.click({force:true});
 
       SelectAddressPage.getAddressSelection("United Fakedom").click();
       SelectAddressPage.continueButton.click();
@@ -162,7 +165,8 @@ context ("Juice Shop Test", () => {
       DeliveryMethodPage.getDeliverySelection("Standard Delivery").click();
       DeliveryMethodPage.continueButton.click();
 
-      PaymentOptionsPage.cardRadioButton.click();
+      PaymentOptionsPage.getCardRadioButton("3456").click();
+
       PaymentOptionsPage.continueButton.click();
 
       OrderSummaryPage.placeOrderButton.click();
@@ -188,20 +192,27 @@ context ("Juice Shop Test", () => {
       CreateAddressPage.cityField.type("Riga");
       CreateAddressPage.submitButton.click();
       
-      SavedAddressesPage.addressRows.should("contain", "Kr.Valdemara 8");
+      SavedAddressesPage.addressRows.should("be.visible", "Kr.Valdemara 8");
 
     })
 
-    //Scenario - Add address
-  // Click on Account
-  // Click on Orders & Payment
-  // Click on My saved addresses
-  // Create page object - SavedAddressesPage
-  // Click on Add New Address
-  // Create page object - CreateAddressPage
-  // Fill in the necessary information
-  // Click Submit button
-  // Validate that previously added address is visible
+
+    it("Add payment option", () => {
+      BasePage.accountButton.click();
+      MenuBar.orderPaymentButton.click();
+      MenuBar.paymentOptionButton.click();
+
+      SavedPaymentMethodsPage.expansionButton.click();
+
+      SavedPaymentMethodsPage.nameField.type("Anna Lapa");
+      SavedPaymentMethodsPage.cardNumberField.type("1234567890123456");
+      SavedPaymentMethodsPage.expiryMonthField.select("7");
+      SavedPaymentMethodsPage.expiryYearField.select("2090");
+      SavedPaymentMethodsPage.submitButton.click();
+
+      SavedPaymentMethodsPage.paymentOptionRows.should("contain", "3456");
+
+    })
 
 
   })
