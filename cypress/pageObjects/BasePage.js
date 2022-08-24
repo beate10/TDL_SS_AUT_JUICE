@@ -33,6 +33,18 @@ class BasePage {
     static get reloadPage(){
         cy.reload();
     }
+
+    static get searchIcon(){
+        return cy.get('.mat-search_icon-search');
+    }
+
+    static get searchField(){
+        return cy.get('.mat-search_field');
+    }
+
+    
+
+    
 }
 
 

@@ -1,6 +1,7 @@
 import BasePage from "../pageObjects/BasePage"
 import LoginPage from "../pageObjects/LoginPage"
 import MainPage from "../pageObjects/MainPage"
+import ProductCard from "../pageObjects/ProductCard"
 import RegistrationPage from "../pageObjects/RegistrationPage"
 
 describe('empty spec', () => {
@@ -34,7 +35,7 @@ context ("Juice Shop Test", () => {
       BasePage.menuBar.should("contain", "demo");
     })
 
-    it.only("Registration Scenario", () => {
+    it("Registration Scenario", () => {
 
       BasePage.accountButton.click();
       BasePage.loginButton.click();
@@ -63,5 +64,43 @@ context ("Juice Shop Test", () => {
     
 
   })
+
+  context("Web Page Funhctionality Tests", () => {
+
+    beforeEach(() => {
+      MainPage.visit();
+      BasePage.closeDialogButton.click();
+      BasePage.accpetCookieButton.click();
+      BasePage.reloadPage;
+      BasePage.accountButton.click();
+      BasePage.loginButton.click();
+      LoginPage.emailField.type("demo");
+      LoginPage.passwordField.type("demo");
+      LoginPage.loginSubmitButton.click();
+    })
+
+    it("Search and validate Lemon", () => {
+      BasePage.searchIcon.click();
+      BasePage.searchField.type("Lemon{enter}");
+      MainPage.getProductCard("Lemon Juice (500ml)").click();
+      ProductCard.card.should("contain", "Sour but full of vitamins.");
+      
+    })
+
+
+    it.only("Search 500ml and validate Lemon, while having multiple cards",() => {
+      BasePage.searchIcon.click();
+      BasePage.searchField.type("500ml{enter}");
+      MainPage.getProductCard("Lemon Juice (500ml)").click();
+      ProductCard.card.should("contain", "Sour but full of vitamins.");
+    })
+
+
+    
+  })
+
+
+
+
 })
 
