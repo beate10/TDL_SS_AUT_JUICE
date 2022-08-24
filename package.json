@@ -1,0 +1,22 @@
+{
+  "name": "tdl_ss_aut_juice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beate10/TDL_SS_AUT_JUICE.git"
+  },
+  "author": "beate",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beate10/TDL_SS_AUT_JUICE/issues"
+  },
+  "homepage": "https://github.com/beate10/TDL_SS_AUT_JUICE#readme",
+  "devDependencies": {
+    "cypress": "^10.6.0"
+  }
+}
