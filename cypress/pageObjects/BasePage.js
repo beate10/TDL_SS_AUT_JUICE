@@ -21,14 +21,8 @@ class BasePage {
         return cy.get("#navbarAccount");
     }
 
-    static get loginButton(){
-        return cy.get("#navbarLoginButton");
-    }
+    
 
-
-    static get menuBar() {
-        return cy.get('.mat-menu-content');
-    }
 
     static get reloadPage(){
         cy.reload();
@@ -45,8 +39,6 @@ class BasePage {
     static get shoppingCartIcon(){
         return cy.get('[aria-label="Show the shopping cart"]');
     }
-    
-
     
 
     

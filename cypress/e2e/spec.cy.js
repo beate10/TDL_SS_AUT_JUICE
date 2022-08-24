@@ -1,13 +1,16 @@
 import BasePage from "../pageObjects/BasePage"
 import BasketPage from "../pageObjects/BasketPage"
+import CreateAddressPage from "../pageObjects/CreateAddressPage"
 import DeliveryMethodPage from "../pageObjects/DeliveryMethodPage"
 import LoginPage from "../pageObjects/LoginPage"
 import MainPage from "../pageObjects/MainPage"
+import MenuBar from "../pageObjects/MenuBar"
 import OrderCompletionPage from "../pageObjects/OrderCompletionPage"
 import OrderSummaryPage from "../pageObjects/OrderSummaryPage"
 import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage"
 import ProductCard from "../pageObjects/ProductCard"
 import RegistrationPage from "../pageObjects/RegistrationPage"
+import SavedAddressesPage from "../pageObjects/SavedAddressesPage"
 import SelectAddressPage from "../pageObjects/SelectAddressPage"
 
 describe('empty spec', () => {
@@ -33,18 +36,18 @@ context ("Juice Shop Test", () => {
     it("Login Scenario", () => {
 
       BasePage.accountButton.click();
-      BasePage.loginButton.click();
+      MenuBar.loginButton.click();
       LoginPage.emailField.type("demo");
       LoginPage.passwordField.type("demo");
       LoginPage.loginSubmitButton.click();
       BasePage.accountButton.click();
-      BasePage.menuBar.should("contain", "demo");
+      MenuBar.menuBar.should("contain", "demo");
     })
 
     it("Registration Scenario", () => {
 
       BasePage.accountButton.click();
-      BasePage.loginButton.click();
+      MenuBar.loginButton.click();
       LoginPage.notCustomerLink.click();
 
       const number = Math.round(Math.random() * 10000);
@@ -63,7 +66,7 @@ context ("Juice Shop Test", () => {
       LoginPage.loginSubmitButton.click();
 
       BasePage.accountButton.click();
-      BasePage.menuBar.should("contain", email);
+      MenuBar.menuBar.should("contain", email);
 
     })
 
@@ -79,7 +82,7 @@ context ("Juice Shop Test", () => {
       BasePage.accpetCookieButton.click();
       BasePage.reloadPage;
       BasePage.accountButton.click();
-      BasePage.loginButton.click();
+      MenuBar.loginButton.click();
       LoginPage.emailField.type("demo");
       LoginPage.passwordField.type("demo");
       LoginPage.loginSubmitButton.click();
@@ -145,7 +148,7 @@ context ("Juice Shop Test", () => {
     })
 
 
-    it.only("Buy Girlie T-shirt", () => {
+    it("Buy Girlie T-shirt", () => {
       BasePage.searchIcon.click();
       BasePage.searchField.type("Girlie{enter}");
       MainPage.getAddToCartButton("Girlie").click();
@@ -167,6 +170,39 @@ context ("Juice Shop Test", () => {
       OrderCompletionPage.confirmationMessage.should("contain", "Thank you for your purchase!");
 
     })
+
+
+    it("Scenario - Add address", () => {
+
+      BasePage.accountButton.click();
+      MenuBar.orderPaymentButton.click();
+      MenuBar.savedAddressButton.click();
+
+      SavedAddressesPage.addNewAddressButton.click();
+
+      CreateAddressPage.countryField.type("Latvia");
+      CreateAddressPage.nameField.type("Anna Lapa");
+      CreateAddressPage.numberField.type("20247821");
+      CreateAddressPage.zipField.type("LV1085");
+      CreateAddressPage.addressField.type("Kr.Valdemara 8");
+      CreateAddressPage.cityField.type("Riga");
+      CreateAddressPage.submitButton.click();
+      
+      SavedAddressesPage.addressRows.should("contain", "Kr.Valdemara 8");
+
+    })
+
+    //Scenario - Add address
+  // Click on Account
+  // Click on Orders & Payment
+  // Click on My saved addresses
+  // Create page object - SavedAddressesPage
+  // Click on Add New Address
+  // Create page object - CreateAddressPage
+  // Fill in the necessary information
+  // Click Submit button
+  // Validate that previously added address is visible
+
 
   })
 
